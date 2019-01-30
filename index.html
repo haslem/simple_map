@@ -12,7 +12,7 @@
    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
    crossorigin=""></script>
 
-   <script src="data\testjson.json"></script>
+   <script src="data\jsonUS.json"></script>
 
    <style type="text/css">
    	#map {height: 400px;}
@@ -27,8 +27,33 @@
 	<div id="map"></div>
 
 	<script >
+
+		function getCountryColor(popEst) {
+			if (popEst > 8){
+				return "blue";
+			}else if (popEst > 7){
+				return "red";
+			}else{
+				return "green"
+			}
+		}
+
+        function countriesStyle(feature){
+        	return{
+        		fillColor: getCountryColor(feature.properties.DIVISION),
+        		weight: 2,
+        		opacity: 1,
+        		color: 'white',
+        		dashArray: 3,
+        		fillOpacity: 0.7
+        	}
+        }
+
 		var map = L.map('map');
-		var layer = L.geoJson(parcels).addTo(map);
+		var layer = L.geoJson(
+			parcels,
+			{style: countriesStyle}
+			).addTo(map);
 		map.fitBounds(layer.getBounds());
 	</script>
 
