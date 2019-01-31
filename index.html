@@ -16,6 +16,8 @@
 
    <style type="text/css">
    	#map {height: 400px;}
+   	.legend {background: white; line-height: 1.5em}
+   	.legend i {width: 5em; float: left}
    </style>
 
 
@@ -55,6 +57,29 @@
 			{style: countriesStyle}
 			).addTo(map);
 		map.fitBounds(layer.getBounds());
+
+
+		 var legend = L.control({position:"bottomright"});
+
+					legend.onAdd = function(map){
+				var div = L.DomUtil.create('div', 'legend');
+				var labels = [
+					">8", 
+					">7", 
+					"others"
+				];
+				var grades = [9, 8, 0];
+				div.innerHTML = '<div><b>Legend</b></div>';
+				for(var i = 0; i < grades.length; i++){
+					div.innerHTML += '<i style="background:' 
+					+ getCountryColor(grades[i]) + '">&nbsp;&nbsp;</i>&nbsp;&nbsp;'
+					+ labels[i] + '<br />';
+				}
+				return div;
+			}
+			legend.addTo(map);
+
+
 	</script>
 
 </body>
